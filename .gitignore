@@ -12,3 +12,4 @@ vendor/
 *.lock
 .phpunit*
 .github/
+AutoCopy.bat

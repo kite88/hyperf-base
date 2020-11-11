@@ -9,10 +9,20 @@ declare(strict_types=1);
  * @contact  group@hyperf.io
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
+
 namespace App\Model;
 
-use Hyperf\DbConnection\Model\Model as BaseModel;
 
-abstract class Model extends BaseModel
+abstract class Model extends \Hyperf\DbConnection\Model\Model
 {
+    public $timestamps = true;
+    public $incrementing = true;
+
+    const CREATED_AT = 'created_time';
+    const UPDATED_AT = 'updated_time';
+
+    protected $dateFormat = 'U';
+
+    protected $primaryKey = 'id';
+
 }

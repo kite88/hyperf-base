@@ -19,7 +19,7 @@ Router::get('/favicon.ico', function () {
 });
 
 
-Router::post('/login', [\App\Controller\IndexController::class, 'login']);
+Router::post('/login', [\App\Controller\AuthController::class, 'login']);
 Router::addGroup('/', function () {
     Router::addGroup('user', function () {
         Router::get('', [\App\Controller\UserController::class, 'index']);

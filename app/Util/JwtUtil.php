@@ -183,7 +183,7 @@ class JwtUtil
         list($base64header, $base64payload, $sign) = $tokens;
 
         //获取jwt算法
-        $base64decodeheader = json_decode(self::base64UrlDecode($base64header), JSON_OBJECT_AS_ARRAY);
+        $base64decodeheader = json_decode(self::base64UrlDecode($base64header), true);
         if (empty($base64decodeheader['alg']))
             return false;
 
@@ -191,7 +191,7 @@ class JwtUtil
         if (self::signature($base64header . '.' . $base64payload, $this->key, $base64decodeheader['alg']) !== $sign)
             return false;
 
-        $payload = json_decode(self::base64UrlDecode($base64payload), JSON_OBJECT_AS_ARRAY);
+        $payload = json_decode(self::base64UrlDecode($base64payload), true);
 
         //签发时间大于当前服务器时间验证失败
         if (isset($payload['iat']) && $payload['iat'] > time())

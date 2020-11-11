@@ -4,25 +4,18 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Exception\NormalApiException;
 use App\Util\ApiUtil;
-use Hyperf\HttpServer\Annotation\Controller;
-use Hyperf\HttpServer\Annotation\GetMapping;
-use Hyperf\HttpServer\Annotation\PostMapping;
-use Hyperf\HttpServer\Annotation\RequestMapping;
-use Hyperf\HttpServer\Contract\RequestInterface;
-use Hyperf\HttpServer\Contract\ResponseInterface;
 
 
-class UserController
+class UserController extends AbstractController
 {
-    public function index(RequestInterface $request, ResponseInterface $response)
+    public function index()
     {
-        return ApiUtil::abnormal('正常异常');
+        return ApiUtil::normal(['uid' => $this->request->getAttribute('uid')]);
     }
 
     public function create()
     {
-        return 'create';
+        return ApiUtil::normal();
     }
 }

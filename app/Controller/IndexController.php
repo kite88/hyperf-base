@@ -24,9 +24,4 @@ class IndexController extends AbstractController
             'message' => "Hello {$user}.",
         ];
     }
-
-    public function login()
-    {
-        return ['code' => 1, 'msg' => 'success', 'data' => null];
-    }
 }

@@ -6,8 +6,10 @@ namespace App\Middleware;
 
 use App\Service\AuthService;
 use App\Util\ApiUtil;
+use App\Util\CommonUtil;
 use Hyperf\HttpServer\Contract\RequestInterface;
 use Hyperf\HttpServer\Contract\ResponseInterface as HttpResponse;
+use Hyperf\Utils\Context;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -36,7 +38,7 @@ class AuthMiddleware implements MiddlewareInterface
      */
     protected $authService;
 
-    public function __construct(ContainerInterface $container, HttpResponse $response, RequestInterface $request,AuthService $authService)
+    public function __construct(ContainerInterface $container, HttpResponse $response, RequestInterface $request, AuthService $authService)
     {
         $this->container = $container;
         $this->response = $response;
@@ -46,13 +48,20 @@ class AuthMiddleware implements MiddlewareInterface
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $token = $request->getHeader('token');
-        //return $this->response->json($token);
-        $isValidToken = false;
-        if (!$isValidToken) {
-            return $this->response->json(['c'=>$this->authService->verifyLogin('','')]);
-            //return $this->response->json(ApiUtil::unAuthorized());
+        $token = CommonUtil::headerPlus($request->getHeader('token'));
+        if ($token === '') {
+            return $this->response->json(ApiUtil::unAuthorized());
         }
+        $uid = $this->authService->verifyToken($token);
+        if ($uid === 0) {
+            return $this->response->json(ApiUtil::unAuthorized());
+        } elseif ($uid === -1) {
+            return $this->response->json(ApiUtil::unAuthorized(ApiUtil::UNAUTHORIZED_S_MSG));
+        }
+        //写入用户ID信息
+        $request = Context::get(ServerRequestInterface::class);
+        $request = $request->withAttribute('uid', $uid);
+        Context::set(ServerRequestInterface::class, $request);
         return $handler->handle($request);
     }
 }

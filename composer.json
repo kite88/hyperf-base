@@ -17,7 +17,7 @@
         "hyperf/cache": "~2.0.0",
         "hyperf/command": "~2.0.0",
         "hyperf/config": "~2.0.0",
-        "hyperf/db-connection": "~2.0.0",
+        "hyperf/db-connection": "^2.0",
         "hyperf/framework": "~2.0.0",
         "hyperf/guzzle": "~2.0.0",
         "hyperf/http-server": "~2.0.0",
@@ -26,7 +26,9 @@
         "hyperf/process": "~2.0.0",
         "hyperf/redis": "~2.0.0",
         "hyperf/database": "~2.0.0",
-        "hyperf/devtool": "^2.0"
+        "hyperf/devtool": "^2.0",
+        "hyperf/http-message": "^2.0",
+        "hyperf/di": "^2.0"
     },
     "require-dev": {
         "swoole/ide-helper": "^4.5",

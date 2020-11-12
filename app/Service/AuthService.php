@@ -89,4 +89,18 @@ class AuthService extends Service
         return $u['id'];
     }
 
+    public function logout($uid)
+    {
+        return $this->redis->del($this->tokenCacheKey . $uid) > 0 ? true : false;
+    }
+
+    public function refreshToken($uid)
+    {
+        $userModel = new User();
+        $result = $userModel::query()
+            ->where('id', $uid)
+            ->first(['*']);
+        return $this->getUserToken($result->toArray());
+    }
+
 }

@@ -19,4 +19,20 @@ class AuthController extends AbstractController
         $res = $service->verifyLogin($username, $password);
         return ApiUtil::normal($res);
     }
+
+    public function logout(AuthService $service)
+    {
+        if ($service->logout($this->request->getAttribute('uid')) === true) {
+            return ApiUtil::normal(null, '退出登录成功');
+        } else {
+            return ApiUtil::abnormal('退出失败');
+        }
+    }
+
+    public function refreshToken(AuthService $service)
+    {
+        $uid = $this->request->getAttribute('uid');
+        return ApiUtil::normal($service->refreshToken($uid));
+    }
+
 }

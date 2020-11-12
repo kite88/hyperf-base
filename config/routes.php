@@ -19,8 +19,10 @@ Router::get('/favicon.ico', function () {
 });
 
 
-Router::post('/login', [\App\Controller\AuthController::class, 'login']);
+Router::post('/login', [\App\Controller\AuthController::class, 'login']);//登录
 Router::addGroup('/', function () {
+    Router::post('logout', [\App\Controller\AuthController::class, 'logout']);//退出登录
+    Router::post('token', [\App\Controller\AuthController::class, 'refreshToken']);//刷新token
     Router::addGroup('user', function () {
         Router::get('', [\App\Controller\UserController::class, 'index']);
         Router::post('', [\App\Controller\UserController::class, 'create']);

@@ -23,11 +23,11 @@ class UserTest extends HttpTestCase
 {
     public function testUser()
     {
-        $passwordUtil = new PasswordUtil(env('PASSWORD_KEY'));
+        /*$passwordUtil = new PasswordUtil(env('PASSWORD_KEY'));
         $userM = new User();
         $userM->username = 'test';
         $userM->password = $passwordUtil->encrypt('123123');
         $res = $userM->save();
-        var_dump($res);
+        var_dump($res);*/
     }
 }

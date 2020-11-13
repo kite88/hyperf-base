@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Command;
 
+use App\Service\UserService;
 use Hyperf\Command\Command as HyperfCommand;
 use Hyperf\Command\Annotation\Command;
 use Psr\Container\ContainerInterface;
@@ -34,5 +35,19 @@ class ForCommand extends HyperfCommand
     public function handle()
     {
         $this->line('Hello Hyperf!', 'info');
+        $UserService = new UserService;
+        /*for ($i = 0; $i <= 20; $i++) {
+            var_dump($UserService->create([
+                'username' => 'test' . $i,
+                'password' => '123123'
+            ]));
+        }*/
+        /*var_dump($UserService->edit([
+            'id' => 3,
+            'username'=>'test3',
+            'password'=>'123123'
+        ]));*/
+        /*var_dump($UserService->remove(3));*/
+
     }
 }

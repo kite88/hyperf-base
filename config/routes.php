@@ -25,7 +25,10 @@ Router::addGroup('/', function () {
     Router::post('token', [\App\Controller\AuthController::class, 'refreshToken']);//刷新token
     Router::addGroup('user', function () {
         Router::get('', [\App\Controller\UserController::class, 'index']);
+        Router::get('/{id}', [\App\Controller\UserController::class, 'find']);
         Router::post('', [\App\Controller\UserController::class, 'create']);
+        Router::put('', [\App\Controller\UserController::class, 'edit']);
+        Router::delete('/{id}', [\App\Controller\UserController::class, 'remove']);
     });
 
 

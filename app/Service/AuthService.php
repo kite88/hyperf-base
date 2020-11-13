@@ -8,31 +8,44 @@ use App\Exception\NormalApiException;
 use App\Model\User;
 use App\Util\JwtUtil;
 use App\Util\PasswordUtil;
+use Hyperf\Di\Annotation\Inject;
 use Psr\Container\ContainerInterface;
 
 class AuthService extends Service
 {
     /**
+     * @Inject()
      * @var JwtUtil
      */
     private $jwt;
 
     /**
+     * @Inject()
      * @var PasswordUtil
      */
     private $pwdUtil;
 
+    /**
+     * @Inject()
+     * @var ContainerInterface
+     */
+    private $container;
+
+    /**
+     * @var mixed|\Redis
+     */
     private $redis;
 
+    /**
+     * @var string
+     */
     private $tokenCacheKey = 'AUTH_TOKEN_';
 
-    public function __construct(JwtUtil $jwtUtil, PasswordUtil $pwdUtil, ContainerInterface $container)
+    public function __construct()
     {
-        $this->pwdUtil = $pwdUtil;
         $this->pwdUtil->setKey(env('PASSWORD_KEY')); //pwd key
-        $this->jwt = $jwtUtil;
         $this->jwt->setKey(env('JWT_SECRET'));//jwt key
-        $this->redis = $container->get(\Redis::class);
+        $this->redis = $this->container->get(\Redis::class);
         $this->tokenCacheKey = env('REDIS_PREFIX') . $this->tokenCacheKey;
     }
 
